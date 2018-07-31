@@ -234,8 +234,6 @@ function sync_accounts() {
     # Check if local marker group exists, if not, create it
     /usr/bin/getent group "${LOCAL_MARKER_GROUP}" >/dev/null 2>&1 || /usr/sbin/groupadd "${LOCAL_MARKER_GROUP}"
 
-    # setup the aws credentials if needed
-    setup_aws_credentials
 
     # declare and set some variables
     local iam_users
@@ -248,6 +246,10 @@ function sync_accounts() {
     # init group and sudoers from tags
     get_iam_groups_from_tag
     get_sudoers_groups_from_tag
+
+    # setup the aws credentials if needed
+    setup_aws_credentials
+
 
     iam_users=$(get_clean_iam_users | sort | uniq)
     if [[ -z "${iam_users}" ]]
