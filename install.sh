@@ -154,6 +154,9 @@ HOME=/
 EOF
 chmod 0644 /etc/cron.d/import_users
 
+# Adding to rc.local to import users at boot
+sed -i -e '$i \/bin/bash '"$IMPORT_USERS_SCRIPT_FILE"' \n' /etc/rc.local
+
 $IMPORT_USERS_SCRIPT_FILE
 
 ./install_restart_sshd.sh
