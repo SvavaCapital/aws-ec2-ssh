@@ -255,14 +255,14 @@ function sync_accounts() {
     if [[ -z "${iam_users}" ]]
     then
       log "we just got back an empty iam_users user list which is likely caused by an IAM outage!"
-      exit 1
+      return 0
     fi
 
     sudo_users=$(get_clean_sudoers_users | sort | uniq)
     if [[ ! -z "${SUDOERS_GROUPS}" ]] && [[ ! "${SUDOERS_GROUPS}" == "##ALL##" ]] && [[ -z "${sudo_users}" ]]
     then
       log "we just got back an empty sudo_users user list which is likely caused by an IAM outage!"
-      exit 1
+      return 0
     fi
 
     local_users=$(get_local_users | sort | uniq)
